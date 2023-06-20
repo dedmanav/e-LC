@@ -14,6 +14,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Form from './Forms/Form';
 import User_Home from './User_Home/User_Home';
 import Footer from './Components/Footer';
+import Messenger from "./Chat/Messenger";
 
 function App() {
   const  {
@@ -73,7 +74,7 @@ const navigate = useNavigate();
        }
   }
   CallAboutPage();
-}, []);
+}, [isloggedin]);
   return (
     <div>
       <Navbar />
@@ -86,6 +87,7 @@ const navigate = useNavigate();
           <Route path="/profile" element={<Profile />} />
           <Route path="/form" element={<Form></Form>}></Route>
           <Route path="/knowmore" element={<KnowMore />} />
+          <Route path="/messenger" element={<Messenger />} />
           {/* <Route path="/profile" >
           {isloggedin ? <Profile/> : <Home/>} */}
           {/* <Profile /> */}
