@@ -7,6 +7,9 @@ import { red } from "tailwindcss/colors";
 // import Chat from "../components/Chat/ChatApp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../Contexts/AuthContext";
+import Conversation from "../Chat/Conversation";
+// import { useNavigate } from "react-router-dom";
 
 function KnowMore() {
   const location = useLocation();
@@ -14,6 +17,49 @@ function KnowMore() {
   const [Data, setData] = useState();
   const [isFetching, setIsFetching] = useState(true);
   const a = ["", "bad", "average", "good", "very good", "excellent"];
+  const {
+      authUser,
+      // setAuthUser,
+      // isloggedin,
+      // setIsloggedin,
+      currentChat,
+      setCurrentChat
+} = useAuth();
+
+const navigate = useNavigate();
+  const chatStarter = async () => {
+    // const chatter = {
+    //   senderId: authUser?._id,
+    //   receiverId: Data[0]._id
+    // };
+          try{
+              console.log("tried");
+              
+              // console.log(authUser?._id);
+              const res = await fetch('/conversations',{
+                  method:"POST",
+                  headers:{
+                      Accept:"application/json",
+                      "Content-Type":"application/json"
+                  },
+                  credentials:"include",
+                  body: JSON.stringify({
+                    senderId: authUser?._id,
+                    receiverId: Data[0]._id
+                   })
+
+              })
+              const object= await res.json();
+              console.log(object);
+              setCurrentChat(object[0]);
+              navigate('/messenger');
+              // setConversations(object);
+              // console.log(conversations);
+          }
+              catch (err) {
+          console.log(err);
+        }
+      };
 
   const CallAboutPage = async () => {
     setIsFetching(true);
@@ -76,7 +122,8 @@ function KnowMore() {
       return currentValue.list.length !== 0;
     });
     setData(res);
-    console.log(res);
+    // console.log(res);
+    console.log(Data[0]);
   };
 
   useEffect(() => {
@@ -114,10 +161,11 @@ function KnowMore() {
               />
               <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 class="text-sm title-font text-gray-500 tracking-widest">
-                  {Data[0].name}
+                  {/* mohan */}
+                  Seller: {Data[0].name}
                 </h2>
                 <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
-                  {Data[0].list[0].item_name}
+                 { Data[0].list[0].item_name}
                 </h1>
                 <div class="flex mb-4">
                   <span class="flex items-center">
@@ -258,8 +306,8 @@ function KnowMore() {
                   <span class="title-font font-medium text-2xl text-gray-900">
                     ₹{Data[0].list[0].item_price}
                   </span>
-                  <button class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                    Report
+                  <button class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick = {chatStarter}>
+                    Chat with Owner
                   </button>
                   <button
                     class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"

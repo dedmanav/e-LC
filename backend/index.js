@@ -21,6 +21,9 @@ const profile = require('./routes/profile');
 const signin = require('./routes/signin');
 const logout = require('./routes/logout');
 const base_endpoint = require('./routes/base_endpoint');
+const conversationRoute = require("./routes/conversations");
+const messageRoute = require("./routes/messages");
+const userRoute = require("./routes/users");
 
 const app = express();
 app.use(express.json());
@@ -37,6 +40,9 @@ app.use('/signin', signin);
 app.use('/profilec', profile);
 app.use('/logout', logout);
 app.use('/', base_endpoint);
+app.use("/conversations", conversationRoute);
+app.use("/messages", messageRoute);
+app.use("/users", userRoute);
 
 // Alloting Port Number
 const port = process.env.PORT || 8000;

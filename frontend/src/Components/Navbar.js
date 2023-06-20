@@ -111,6 +111,11 @@ const navigate = useNavigate();
                 Profile
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link to='/messenger' className='nav-links'>
+                ChatBox
+              </Link>
+            </li>
             {/* <li>
               <Link
                 to='/'

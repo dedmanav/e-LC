@@ -9,7 +9,7 @@ const router = express.Router();
 // Get the whole data from the database
 router.get('/', jwt_Authenticate, async (req, res) => {
   try {
-    const user = await User.find({}).select({ list: 1 });
+    const user = await User.find({}).select({ list: 1, name:1});
 
     console.log(user);
     res.status(200).send(user);
