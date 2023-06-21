@@ -6,7 +6,7 @@ import "./messenger.css";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from '../Contexts/AuthContext';
 // import axios from "axios";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import Topbar from "./Topbar";
 import Conversation from "./Conversation";
 import CurrConversation from "./CurrConversation";
@@ -31,16 +31,16 @@ export default function Messenger() {
 
   const scrollRef = useRef();
 
-//   useEffect(() => {
-//     socket.current = io("ws://localhost:8900");
-//     socket.current.on("getMessage", (data) => {
-//       setArrivalMessage({
-//         sender: data.senderId,
-//         text: data.text,
-//         createdAt: Date.now(),
-//       });
-//     });
-//   }, []);
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
 
   useEffect(() => {
     arrivalMessage &&
@@ -48,14 +48,14 @@ export default function Messenger() {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-//   useEffect(() => {
-//     socket.current.emit("addUser", authUser._id);
-//     socket.current.on("getUsers", (users) => {
-//       setOnlineUsers(
-//         authUser.followings.filter((f) => users.some((u) => u.userId === f))
-//       );
-//     });
-//   }, [authUser]);
+  useEffect(() => {
+    socket.current.emit("addUser", authUser._id);
+    socket.current.on("getUsers", (users) => {
+      setOnlineUsers(
+        // authUser.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [authUser]);
 var userId = authUser?._id;
   useEffect(() => {
     const getConversations = async () => {
@@ -122,11 +122,11 @@ var userId = authUser?._id;
       (member) => member !== authUser._id
     );
 
-//     socket.current.emit("sendMessage", {
-//       senderId: authUser._id,
-//       receiverId,
-//       text: newMessage,
-//     });
+    socket.current.emit("sendMessage", {
+      senderId: authUser._id,
+      receiverId,
+      text: newMessage,
+    });
 
     try {
         console.log("tried");

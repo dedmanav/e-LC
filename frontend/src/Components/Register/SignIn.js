@@ -185,7 +185,7 @@ const SignIn = () => {
               placeholder="Password"
             />
             <a id="A" href="#">
-              Forgot your password?
+              
             </a>
             <button onClick={loginUser} className="butt signinbutton">
               Sign In
