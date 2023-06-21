@@ -24,7 +24,7 @@ function App() {
     setIsloggedin
 } = useAuth();
 // const isloggedin = useAuth()
-// const [isFetching, setIsFetching] = useState(true);
+const [isFetching, setIsFetching] = useState(true);
 const navigate = useNavigate();
 //   // const { auth } = useAuth();
 //   // const refresh = useRefresh();
@@ -48,6 +48,7 @@ const navigate = useNavigate();
             credentials:"include"
         });
         const object = await res.json();
+
         console.log(object);
         setAuthUser(object);
         console.log(authUser);
@@ -56,6 +57,7 @@ const navigate = useNavigate();
         console.log(isloggedin);
         if(!res.status===200)
         {
+          // setIsFetching(true);
             const error= new Error (res.error);
             alert('There seems to be some issue with your credentials. We are working on it.');
             throw error;
@@ -67,15 +69,18 @@ const navigate = useNavigate();
         console.log(err);
         console.log("caught error");
         setIsloggedin(false);
-        // setIsFetching(false);
+        setIsFetching(false);
         navigate("/");
     }
+    finally {
+      setIsFetching(false);
+  }
   }
   CallAboutPage();
 }, [isloggedin]);
   return (
     <>
-    {authUser ?
+    {!isFetching ?
     <>
     <div>
       <Navbar />
