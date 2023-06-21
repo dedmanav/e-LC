@@ -142,8 +142,9 @@ var userId = authUser?._id;
                    message
                   })
             })
-    //   const res = await axios.post("/messages", message);
-      setMessages([...messages, res.data]);
+            const newM = await res.json();
+            console.log(newM);
+      setMessages([...messages, newM]);
       setNewMessage("");
     } catch (err) {
       console.log(err);
@@ -160,7 +161,7 @@ var userId = authUser?._id;
       <div className="messenger">
         <div className="chatMenu" >
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
+          <h1 style={{textAlign: "center"}}> All Conversations </h1>
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={authUser} />

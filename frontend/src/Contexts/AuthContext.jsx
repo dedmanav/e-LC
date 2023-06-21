@@ -1,12 +1,12 @@
 import React, {useState,useEffect,useContext} from "react";
 
-const AuthContext = React.createContext()
+const AuthContext = React.createContext({})
 export function useAuth(){
     return useContext(AuthContext);
 }
 export function AuthProvider(props){
-    const [authUser,setAuthUser] =useState(null);
-    const [isloggedin,setIsloggedin] =useState(false);
+    const [authUser,setAuthUser] = useState(null);
+    const [isloggedin,setIsloggedin] = useState(false);
     const [currentChat, setCurrentChat] = useState(null);
     const value = {
         authUser,
@@ -22,3 +22,5 @@ export function AuthProvider(props){
         </AuthContext.Provider>
     )
 }
+
+export default AuthContext;
