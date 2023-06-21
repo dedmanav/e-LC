@@ -7,11 +7,16 @@ import { Route, Routes } from "react-router-dom";
 // import data from "../components/message.json";
 // import KnowMore from "./KnowMore";
 import { ClassNames } from "@emotion/react";
+import { useAuth } from "../Contexts/AuthContext";
 const image1 = require("../assets/img/icons8-age-100.png");
 const image2 = require("../assets/img/icons8-rating-100.png");
 const image5 = require("../assets/img/search.ico");
 
 const User_Home = () => {
+  const { authUser } = useAuth();
+  useEffect(() => {
+    filterr(dat);
+  }, [authUser]);
   const navigate = useNavigate();
 
   const [Data, setData] = useState();
@@ -59,7 +64,7 @@ const User_Home = () => {
     const ress = Data.map((element) => {
       return {
         ...element,
-        list: element.list.filter((currentVal) => {
+        list: element.list?.filter((currentVal) => {
           if (currentVal.item_name === undefined) {
           } else {
             return currentVal.item_name.toLowerCase().includes(e.target.value);
@@ -77,7 +82,7 @@ const User_Home = () => {
     const res = Data.map((element) => {
       return {
         ...element,
-        list: element.list.filter((currentVal) => {
+        list: element.list?.filter((currentVal) => {
           if (val === "") return currentVal;
           else return currentVal.item_tag === val;
         }),
@@ -87,10 +92,11 @@ const User_Home = () => {
     console.log(res);
   };
 
+
   const filterr = (object) => {
-    const res = object.filter((currentValue) => {
+    const res = object?.filter((currentValue) => {
       // if (val === "") return currentValue;
-      return currentValue.list.length !== 0;
+      return (currentValue.list.length !== 0 && currentValue._id!==authUser?._id);
     });
     setData(res);
     setdat(res);

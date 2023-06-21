@@ -25,7 +25,6 @@ function App() {
 } = useAuth();
 // const isloggedin = useAuth()
 // const [isFetching, setIsFetching] = useState(true);
-
 const navigate = useNavigate();
 //   // const { auth } = useAuth();
 //   // const refresh = useRefresh();
@@ -34,7 +33,7 @@ const navigate = useNavigate();
   useEffect(() => {
     // isRefreshing(true);
     
-    const CallAboutPage= async()=>
+    const CallAboutPage= async() =>
 {
     // setIsFetching(true);
     console.log("Call about")
@@ -48,14 +47,13 @@ const navigate = useNavigate();
             },
             credentials:"include"
         });
-        const object= await res.json();
-       setAuthUser(object);
+        const object = await res.json();
         console.log(object);
         setAuthUser(object);
         console.log(authUser);
+        console.log(isloggedin);
         setIsloggedin(true);
         console.log(isloggedin);
-        // setIsFetching(false);
         if(!res.status===200)
         {
             const error= new Error (res.error);
@@ -70,12 +68,15 @@ const navigate = useNavigate();
         console.log("caught error");
         setIsloggedin(false);
         // setIsFetching(false);
-        navigate("/"); 
-       }
+        navigate("/");
+    }
   }
   CallAboutPage();
 }, [isloggedin]);
   return (
+    <>
+    {authUser ?
+    <>
     <div>
       <Navbar />
     {/* <Routers> */}
@@ -101,6 +102,12 @@ const navigate = useNavigate();
       {/* </Routers> */}
       
       </div>
+      </>
+      :
+      <>
+      <p>Loading . . .</p>
+      </>}
+      </>
   );
 }
 

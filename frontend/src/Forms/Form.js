@@ -105,6 +105,7 @@ const Form = () => {
     if (res.status === 201) {
       window.alert("Details added successfully");
       console.log("Details added successfully");
+      window.location.reload(false);
     } else {
       window.alert("Could not post your Data");
       console.log("Could not post your Data");

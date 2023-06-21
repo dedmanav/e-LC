@@ -24,6 +24,7 @@ const base_endpoint = require('./routes/base_endpoint');
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const userRoute = require("./routes/users");
+const delete_item = require("./routes/delete_item");
 
 const app = express();
 app.use(express.json());
@@ -33,6 +34,7 @@ const server = require('http').createServer(app);
 
 // Setting Routes
 app.use('/db', all_listings);
+app.use('/delete', delete_item);
 app.use('/add_data', add_item);
 app.use('/register', register);
 app.use('/signin', signin);

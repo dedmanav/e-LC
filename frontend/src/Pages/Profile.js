@@ -15,50 +15,9 @@ const Profile = () => {
         setIsloggedin
     } = useAuth();
 
-    const [isFetching, setIsFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(false);
 
     const navigate = useNavigate();
-
-
-const CallAboutPage= async()=>
-{
-    setIsFetching(true);
-    console.log("Call about")
-        try{
-        console.log("tried");
-        const res=await fetch('/profilec',{
-            method:"GET",
-            headers:{
-                Accept:"application/json",
-                "Content-Type":"application/json"
-            },
-            credentials:"include"
-        });
-        const object= await res.json();
-       setAuthUser(object);
-        console.log(object);
-        setAuthUser(object);
-        console.log(authUser);
-        setIsloggedin(true);
-        console.log(isloggedin);
-        setIsFetching(false);
-        if(!res.status===200)
-        {
-            const error= new Error (res.error);
-            alert('There seems to be some issue with your credentials. We are working on it.');
-            throw error;
-        }
-    }
-    catch(err){
-        console.log(err);
-        console.log("caught error");
-        setIsFetching(false);
-        navigate("/signin"); 
-       }
-};
-    useEffect(()=>{
-        CallAboutPage();
-    }, [])
     
     if(isFetching)
     {
@@ -209,22 +168,7 @@ const CallAboutPage= async()=>
                                         
                                     {authUser?.list.map((dataa, key) => {
                                 return (<>
-                      <button
-                        className=" text-left"
-                        onClick={() => {
-                          navigate("/knowmore", {
-                            state: { item_id: dataa._id },
-                          });
-                        }}
-                      >
-                                <Cards productName={dataa.item_name} productInfo={dataa.item_description} productImage={dataa.item_immage}/>
-                                </button>
-                                <Routes>
-                        <Route
-                          path="/knowmore"
-                          element={<KnowMore a={dataa._id} />}
-                        />
-                      </Routes>
+                                <Cards productName={dataa.item_name} productInfo={dataa.item_description} productImage={dataa.item_immage} productID={dataa._id}/>
                               </>
                               );
                                     })}
