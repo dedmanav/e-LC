@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Message = require("../models/Message");
+const Message = require("../Models/Message");
 
 //add
 
@@ -15,6 +15,8 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 
 //get
 
